@@ -16,12 +16,20 @@ pipeline {
 		sh 'docker build -t chandans12/flask-project:$BUILD_NUMBER ./venv/'
             }
         }
+//         stage('Docker Login') {
+//             steps {
+//                 //sh 'docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW' (this will leave the password visible)
+//                 sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
+//                 }
+//             }
         stage('Docker Login') {
             steps {
-                //sh 'docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW' (this will leave the password visible)
-                sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_CREDS_USR', passwordVariable: 'DOCKERHUB_CREDS_PSW')]) {
+                    sh 'echo $DOCKERHUB_CREDS_PSW | sudo -S docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
+                    }
                 }
             }
+
         stage('Docker Push') {
             steps {
 		//sh 'docker push raj80dockerid/jenkinstest' (this will use the tag latest)
