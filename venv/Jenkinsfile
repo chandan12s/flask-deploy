@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDS = credentials('dockerhub')
-        MINIKUBE_PATH = 'C:\\minikube'
+
     }
     stages {
         stage('Clone Repo') {
@@ -35,26 +35,7 @@ pipeline {
                 sh 'docker pull chandans12/flask-project:1'
                 }
             }
-         stage('Start minikube') {
-            steps {
-                bat "set PATH=%MINIKUBE_PATH%;%PATH% && minikube start"
-                }
-            }
-         stage('Apply deployment.yaml') {
-            steps {
-                sh 'kubectl apply -f deployment.yaml'
-                }
-            }
-         stage('Get services') {
-            steps {
-                sh 'kubectl get services'
-                }
-            }
-         stage('Get the url') {
-            steps {
-                sh 'minikube service project-flask-service --url'
-                }
-            }
+
         }
     post {
 		always {
