@@ -36,6 +36,7 @@ pipeline {
             }
          stage('Start minikube') {
             steps {
+                env.PATH = "C:\\minikube;$env.PATH"
                 sh 'minikube start'
                 }
             }
