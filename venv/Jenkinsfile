@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDS = credentials('dockerhub')
+        MINIKUBE_PATH = 'C:\\minikube'
     }
     stages {
         stage('Clone Repo') {
@@ -36,8 +37,7 @@ pipeline {
             }
          stage('Start minikube') {
             steps {
-                env.PATH = "C:\\minikube;$env.PATH"
-                sh 'minikube start'
+                bat "set PATH=%MINIKUBE_PATH%;%PATH% && minikube start"
                 }
             }
          stage('Apply deployment.yaml') {
