@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-COPY requirements.txt .
+COPY venv/requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install -r venv/requirements.txt
 
 COPY . .
 
