@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY . /app
 
-COPY venv/requirements.txt .
+COPY requirements.txt .
 
-RUN pip install -r venv/requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 5050
+EXPOSE 8080
 
 CMD ["python", "app.py"]
