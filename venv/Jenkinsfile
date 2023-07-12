@@ -32,7 +32,12 @@ pipeline {
             }
          stage('Pull from docker') {
             steps {
-                sh 'docker pull chandans12/flask-project:1'
+                sh 'docker pull chandans12/flask-project:$BUILD_NUMBER'
+                }
+            }
+	 stage('Deploying App to Kubernetes') {
+            steps {
+                kubernetesDeploy(configs: "./venv/deployment.yaml", kubeconfigId: "kubernetes")
                 }
             }
 
